@@ -26,8 +26,8 @@ class LayoutPresentational extends React.Component<typeof mapStateToPropsType & 
     }
 
     return [
-      <Navbar />,
-      this.props.isLoggedIn && <InnerLayout />
+      <Navbar key="navbar" />,
+      <InnerLayout key="innerlayout" />
     ] as any
   }
 }

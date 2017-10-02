@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js --env production",
+    "build": "yarn build:prod",
+    "build:prod": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js --env production",
+    "build:prod:analyze": "cross-env WEBPACK_ANALYZE=true yarn build:prod",
+    "build:dev": "cross-env NODE_ENV=development webpack --config webpack.config.dev.js --env development",
+    "build:dev:analyze": "cross-env WEBPACK_ANALYZE=true yarn build:dev",
     "start": "webpack-dev-server --config webpack.config.dev.js --env development"
   },
   "author": "",
@@ -19,6 +23,7 @@
     "@types/recompose": "^0.24.2",
     "@types/redux": "^3.6.0",
     "@types/redux-form": "^7.0.5",
+    "@types/redux-thunk": "^2.1.0",
     "@types/uuid": "^3.4.2",
     "awesome-typescript-loader": "^3.2.3",
     "babel": "^6.23.0",
@@ -38,6 +43,7 @@
     "recompose": "^0.25.1",
     "redux": "^3.7.2",
     "redux-form": "^7.0.4",
+    "redux-thunk": "^2.2.0",
     "semantic-ui-react": "^0.74.2",
     "source-map-loader": "^0.2.1",
     "thread-loader": "^1.1.1",
@@ -46,6 +52,7 @@
     "uglifyjs-webpack-plugin": "^0.4.6",
     "uuid": "^3.1.0",
     "webpack": "^3.6.0",
+    "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
     "worker-loader": "^1.0.0"
   }

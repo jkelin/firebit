@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { MockPasswordDB } from './passwordDB';
-import { App } from "./components/App";
+import { App } from "./containers/App";
 import { createFireBitStore } from "./store/index";
 
 const db = new MockPasswordDB();
-const store = createFireBitStore();
+const store = createFireBitStore(db);
 
 (window as any).firebit = {
   db,
@@ -18,8 +18,8 @@ render(<App passwordDB={db} store={store} />, appContainer);
 
 const hot = (module as any).hot;
 if (hot) {
-  hot.accept(['./src/components/App.tsx'], () => {
-    const NextApp = require('./components/App').App;
+  hot.accept(['./src/containers/App.tsx'], () => {
+    const NextApp = require('./containers/App').App;
     render(<NextApp passwordDB={db} store={store} />, appContainer);
   });
 }

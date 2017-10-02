@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require("webpack");
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const src = path.resolve(__dirname, 'src');
 const dist = path.resolve(__dirname, 'dist');
@@ -16,7 +17,7 @@ module.exports = {
   },
 
   output: {
-    filename: "main.js",
+    filename: "main.[hash].js",
     path: dist
   },
 
@@ -52,12 +53,23 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(src, 'index.ejs'),
-      hash: true,
       NODE_ENV: process.env.NODE_ENV
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new UglifyJSPlugin({
-      sourceMap: true
-    })
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false,
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
+      compress: {
+        unused: true,
+        dead_code: true,
+        warnings: false,
+      },
+    }),
+    process.env.WEBPACK_ANALYZE && new BundleAnalyzerPlugin({analyzerMode: 'static', generateStatsFile: true})
   ],
 };
+
+module.exports.plugins = module.exports.plugins.filter(p => p)

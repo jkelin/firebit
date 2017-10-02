@@ -4,28 +4,38 @@ import { getFunType, withPasswordDB } from "../helpers";
 import { Button, Checkbox, Form, Container, Grid, Message } from 'semantic-ui-react'
 import { reduxForm, Field, InjectedFormProps, SubmissionError } from 'redux-form';
 import { compose } from "recompose";
-import { Dispatch } from "react-redux";
+import { Dispatch, connect } from "react-redux";
 import { RootState } from "../store/index";
-import { GlobalActions } from "../store/global";
+import { GlobalThunks } from "../store/global";
 
-function selectFromDB(db: IPasswordDB) {
+function mapStateToProps(state: RootState) {
   return {
-    login: db.login
+    isLoggedIn: state.global.isLoggedIn,
+    search: state.global.search
   }
 }
 
-const selectFromDBType = getFunType(selectFromDB);
+function mapDispatchToProps(dispatch: Dispatch<any>) {
+  return {
+    setSearch: (what: string) => dispatch(GlobalThunks.Search(what))
+  }
+}
 
-interface Props { }
+const mapStateToPropsType = getFunType(mapStateToProps);
+const mapDispatchToPropsType = getFunType(mapDispatchToProps);
 
-interface State { }
+interface Props {}
+
+interface State {}
 
 interface FormData {
   username: string;
   password: string;
 }
 
-class LoginPresentational extends React.Component<typeof selectFromDBType & Props & InjectedFormProps<FormData, {}>, State> {
+type AllProps = typeof mapDispatchToPropsType & typeof mapStateToPropsType & Props & InjectedFormProps<FormData, {}>;
+
+class LoginPresentational extends React.Component<AllProps, State> {
   render() {
     return (
       <div style={{height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
@@ -56,18 +66,16 @@ class LoginPresentational extends React.Component<typeof selectFromDBType & Prop
   }
 }
 
-function onSubmit(data: FormData, dispatch: Dispatch<RootState>, props: typeof selectFromDBType){
-  return props.login(data.username, data.password).then(x => {
-    if (!x) {
+function onSubmit(data: FormData, dispatch: Dispatch<RootState>, props: AllProps){
+  return dispatch(GlobalThunks.Login(data.username, data.password)).then(res => {
+    if (!res) {
       throw new SubmissionError({ _error: "Username or password invalid" });
     }
-
-    dispatch(GlobalActions.SetLoggedIn.create!({ isLoggedIn: true }));
   });
 }
 
 export const Login = compose(
-  withPasswordDB<Props, typeof selectFromDBType>(selectFromDB),
+  connect(mapStateToProps, mapDispatchToProps),
   reduxForm({
     form: 'login',
     onSubmit

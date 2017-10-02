@@ -31,7 +31,7 @@ export class MockPasswordDB implements IPasswordDB {
   private isLoggedInInner = false;
 
   public cryptoDelay: number = 500;
-  public opDelay: number = 20;
+  public opDelay: number = 100;
 
   login = (username: string, password: string) => {
     const promise = delayResolve(this.cryptoDelay, username === 'username' && password === 'password');

@@ -9,6 +9,7 @@ import { Navbar } from "./Navbar";
 
 function mapStateToProps(state: RootState) {
   return {
+    search: state.global.search
   }
 }
 
@@ -18,10 +19,10 @@ interface Props {}
 
 interface State {}
 
-class InnerLayoutPresentational extends React.Component<typeof mapStateToPropsType & Props, State> {
+class ItemListPresentational extends React.Component<typeof mapStateToPropsType & Props, State> {
   render() {
-    return <Button>Inner layoutszss</Button>
+    return <Button>Inner layout</Button>
   }
 }
 
-export const InnerLayout = connect(mapStateToProps)(InnerLayoutPresentational);
+export const ItemList = connect(mapStateToProps)(ItemListPresentational);
