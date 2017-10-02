@@ -4,15 +4,15 @@ import { IPasswordDB } from "../passwordDB/index";
 
 export type ThunkParam = IPasswordDB;
 
-export type ActionItem<TPayload, TState> = {
+export type ActionItem<TState, TPayload> = {
   (params: TPayload): Action;
   readonly symbol: string;
   readonly create: (params: TPayload) => Action;
   readonly dispatch: (dispatch: Dispatch<any>) => (params: TPayload) => void;
-  readonly handle: (payload: TPayload, state: TState) => TState;
+  readonly handle: (state: TState, payload: TPayload) => TState;
 }
 
-export function defineAction<TState, TPayload>(handle: (payload: TPayload, state: TState) => TState): ActionItem<TPayload, TState> {
+export function defineAction<TState, TPayload>(handle: (state: TState, payload: TPayload) => TState): ActionItem<TState, TPayload> {
   return function(symbol: string) {
     const create = (payload: TPayload) => ({ type: symbol, payload });
     const ret: any = create;
@@ -36,11 +36,11 @@ export function prepareActions<T>(actions: T): T {
   return ret as T;
 }
 
-export function createReducer<TState, T extends Record<string, ActionItem<any, TState>>>(initialState: TState, actions: T) {
+export function createReducer<TState, T extends Record<string, ActionItem<TState, any>>>(initialState: TState, actions: T) {
   return function reducer(state: TState = initialState, action: Action): TState {
     for (const key in actions) {
       if (actions[key].symbol === action.type) {
-        return actions[key].handle((action as any).payload, state);
+        return actions[key].handle(state, (action as any).payload);
       }
     }
   

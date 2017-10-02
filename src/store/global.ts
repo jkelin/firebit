@@ -18,10 +18,10 @@ const initialState: GlobalState = {
 }
 
 export const GlobalActions = prepareActions({
-  SetLoggedIn: defineAction<GlobalState, boolean>((isLoggedIn, state) => ({ ...state, isLoggedIn })),
-  SetSearch: defineAction<GlobalState, string>((search, state) => ({ ...state, search })),
-  SetSearchResults: defineAction<GlobalState, Item[]>((searchResults, state) => ({ ...state, searchResults })),
-  SetIsSearching: defineAction<GlobalState, boolean>((isSearching, state) => ({ ...state, isSearching })),
+  SetLoggedIn: defineAction<GlobalState, boolean>((state, isLoggedIn) => ({ ...state, isLoggedIn })),
+  SetSearch: defineAction<GlobalState, string>((state, search) => ({ ...state, search })),
+  SetSearchResults: defineAction<GlobalState, Item[]>((state, searchResults) => ({ ...state, searchResults })),
+  SetIsSearching: defineAction<GlobalState, boolean>((state, isSearching) => ({ ...state, isSearching })),
 })
 
 export const GlobalThunks = {
