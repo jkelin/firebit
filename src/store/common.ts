@@ -12,18 +12,48 @@ export type ActionItem<TState, TPayload> = {
   readonly handle: (state: TState, payload: TPayload) => TState;
 }
 
+function defineActionInner<TPayload>(handle: Function, symbol: string) {
+  const create = (payload: TPayload) => ({ type: symbol, payload });
+  const ret: any = create;
+
+  ret.symbol = symbol;
+  ret.create = create;
+  ret.handle = handle;
+  ret.dispatch = (dispatch: Dispatch<any>) => (payload: TPayload) => dispatch(create(payload));
+
+  return ret;
+}
+
 export function defineAction<TState, TPayload>(handle: (state: TState, payload: TPayload) => TState): ActionItem<TState, TPayload> {
-  return function(symbol: string) {
-    const create = (payload: TPayload) => ({ type: symbol, payload });
-    const ret: any = create;
+  return defineActionInner.bind(null, handle);
+}
 
-    ret.symbol = symbol;
-    ret.create = create;
-    ret.handle = handle;
-    ret.dispatch = (dispatch: Dispatch<any>) => (payload: TPayload) => dispatch(create(payload));
+export function createActionDefiner<TState>() {
+  return function defineAction<TPayload>(handle: (state: TState, payload: TPayload) => TState): ActionItem<TState, TPayload> {
+    return defineActionInner.bind(null, handle);
+  }
+}
 
-    return ret;
-  } as any;
+function defineShallowActionInner<TPayload>(handle: (state: any, payload: TPayload) => any, symbol: string) {
+  const create = (payload: TPayload) => ({ type: symbol, payload });
+  const ret: any = create;
+
+  ret.symbol = symbol;
+  ret.create = create;
+  ret.handle = (state: any, payload: TPayload) => ({ ...state, ...handle(state, payload) });
+  ret.dispatch = (dispatch: Dispatch<any>) => (payload: TPayload) => dispatch(create(payload));
+
+  return ret;
+}
+
+export function defineShallowAction<TState, TPayload>(handle: (state: TState, payload: TPayload) => Partial<TState>): ActionItem<TState, TPayload> {
+  return defineShallowActionInner.bind(null, handle);
+}
+
+export function createShallowActionDefiner<TState>() {
+  return function defineShallowAction<TPayload>(handle: (state: TState, payload: TPayload) => Partial<TState>): ActionItem<TState, TPayload> {
+    return defineShallowActionInner.bind(null, handle);
+  }
 }
 
 export function prepareActions<T>(actions: T): T {

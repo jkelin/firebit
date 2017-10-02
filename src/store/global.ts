@@ -1,5 +1,5 @@
 import { createStore, combineReducers } from "redux";
-import { prepareActions, defineAction, createReducer, ThunkParam } from './common';
+import { prepareActions, createReducer, ThunkParam, createActionDefiner, createShallowActionDefiner } from './common';
 import { Dispatch } from "redux";
 import { RootState } from "./index";
 import { Action } from "redux";
@@ -17,11 +17,14 @@ const initialState: GlobalState = {
   search: ''
 }
 
+const defineAction = createActionDefiner<GlobalState>();
+const shallowAction = createShallowActionDefiner<GlobalState>();
+
 export const GlobalActions = prepareActions({
-  SetLoggedIn: defineAction<GlobalState, boolean>((state, isLoggedIn) => ({ ...state, isLoggedIn })),
-  SetSearch: defineAction<GlobalState, string>((state, search) => ({ ...state, search })),
-  SetSearchResults: defineAction<GlobalState, Item[]>((state, searchResults) => ({ ...state, searchResults })),
-  SetIsSearching: defineAction<GlobalState, boolean>((state, isSearching) => ({ ...state, isSearching })),
+  SetLoggedIn: shallowAction<boolean>((state, isLoggedIn) => ({ isLoggedIn })),
+  SetSearch: shallowAction<string>((state, search) => ({ search })),
+  SetSearchResults: shallowAction<Item[]>((state, searchResults) => ({ searchResults })),
+  SetIsSearching: shallowAction<boolean>((state, isSearching) => ({ isSearching })),
 })
 
 export const GlobalThunks = {
