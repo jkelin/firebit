@@ -25,24 +25,20 @@ export const GlobalActions = prepareActions({
 })
 
 export const GlobalThunks = {
-  Login(username: string, password: string) {
-    return async (dispatch: Dispatch<any>, getState: () => RootState, db: ThunkParam) => {
-      const res = await db.login(username, password)
+  Login: (username: string, password: string) => async (dispatch: Dispatch<any>, getState: () => RootState, db: ThunkParam) => {
+    const res = await db.login(username, password)
 
-      dispatch(GlobalActions.SetLoggedIn(res));
-      dispatch(GlobalThunks.Search(''));
+    dispatch(GlobalActions.SetLoggedIn(res))
+    dispatch(GlobalThunks.Search(''))
 
-      return res
-    }
+    return res
   },
-  Search(what: string) {
-    return async (dispatch: Dispatch<any>, getState: () => RootState, db: ThunkParam) => {
-      dispatch(GlobalActions.SetIsSearching(true))
-      dispatch(GlobalActions.SetSearch(what))
-      const res = await db.searchItems(what)
-      dispatch(GlobalActions.SetSearchResults(res))
-      dispatch(GlobalActions.SetIsSearching(false))
-    }
+  Search: (what: string) => async (dispatch: Dispatch<any>, getState: () => RootState, db: ThunkParam) => {
+    dispatch(GlobalActions.SetIsSearching(true))
+    dispatch(GlobalActions.SetSearch(what))
+    const res = await db.searchItems(what)
+    dispatch(GlobalActions.SetSearchResults(res))
+    dispatch(GlobalActions.SetIsSearching(false))
   }
 }
 
