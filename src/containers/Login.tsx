@@ -66,7 +66,7 @@ class LoginPresentational extends React.Component<AllProps, State> {
   }
 }
 
-function onSubmit(data: FormData, dispatch: Dispatch<RootState>, props: AllProps){
+function onSubmit(data: FormData, dispatch: Dispatch<RootState>, props: AllProps) {
   return dispatch(GlobalThunks.Login(data.username, data.password)).then((res) => {
     if (!res) {
       throw new SubmissionError({ _error: "Username or password invalid" });
