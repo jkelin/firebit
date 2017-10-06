@@ -1,10 +1,10 @@
-import { Store, createStore, combineReducers } from "redux";
-import { reducer as formReducer, FormState } from 'redux-form'
-import { GlobalState, GlobalReducer } from "./global";
-import thunk from 'redux-thunk';
+import { combineReducers, createStore, Store } from "redux";
 import { applyMiddleware } from "redux";
 import { compose } from "redux";
+import { FormState, reducer as formReducer } from "redux-form";
+import thunk from "redux-thunk";
 import { IPasswordDB } from "../passwordDB/index";
+import { GlobalReducer, GlobalState } from "./global";
 
 export interface RootState {
   form: FormState;
@@ -13,8 +13,8 @@ export interface RootState {
 
 const reducers: Record<keyof RootState, any> = {
   form: formReducer,
-  global: GlobalReducer
-}
+  global: GlobalReducer,
+};
 
 export type RootStore = Store<RootState>;
 
@@ -24,7 +24,7 @@ export function createFireBitStore(db: IPasswordDB): RootStore {
   return createStore(
     combineReducers(reducers),
     composeEnhancers(
-      applyMiddleware(thunk.withExtraArgument(db))
-    )
+      applyMiddleware(thunk.withExtraArgument(db)),
+    ),
   );
 }

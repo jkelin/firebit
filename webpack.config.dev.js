@@ -3,6 +3,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require("webpack");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+
 
 const src = path.resolve(__dirname, 'src');
 const dist = path.resolve(__dirname, 'dist');
@@ -20,43 +22,63 @@ module.exports = {
     path: dist
   },
 
-  devtool: "source-map",
+  devtool: "inline-source-map",
 
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".json"]
   },
 
   module: {
-    loaders: [
-      {
-          test: /\.tsx?$/,
-          loaders: [
-              "react-hot-loader/webpack",
-              "awesome-typescript-loader"
-          ],
-          exclude: path.resolve(__dirname, 'node_modules'),
-          include: path.resolve(__dirname, "src"),
+    rules: [{
+        test: /\.tsx?$/,
+        use: [
+          "react-hot-loader/webpack",
+          {
+            loader: "ts-loader",
+            options: {
+              transpileOnly: true
+            }
+          }
+        ],
+        exclude: path.resolve(__dirname, 'node_modules'),
+        include: path.resolve(__dirname, "src"),
       },
       {
-          enforce: "pre",
-          test: /\.js$/,
-          loader: "source-map-loader"
+        test: /\.js$/,
+        enforce: "pre",
+        loader: "source-map-loader"
       },
-  ]
+      {
+        test: /\.less$/,
+        use: [{
+          loader: "style-loader" // creates style nodes from JS strings
+        }, {
+          loader: "css-loader" // translates CSS into CommonJS
+        }, {
+          loader: "less-loader" // compiles Less to CSS
+        }]
+      },
+    ]
   },
 
   plugins: [
+    new ForkTsCheckerWebpackPlugin({
+      tslint: true
+    }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(src, 'index.ejs'),
       NODE_ENV: process.env.NODE_ENV
     }),
-    process.env.WEBPACK_ANALYZE && new BundleAnalyzerPlugin({analyzerMode: 'static', generateStatsFile: true})
+    process.env.WEBPACK_ANALYZE && new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      generateStatsFile: true
+    })
   ],
 
   devServer: {
-    hot: true,
+    hot: true
   },
 
   externals: {

@@ -1,24 +1,24 @@
-import * as React from 'react';
-import { IPasswordDB } from "../passwordDB/index";
-import { getFunType, withPasswordDB } from "../helpers";
-import { Button, Checkbox, Form, Container, Grid, Message } from 'semantic-ui-react'
-import { reduxForm, Field, InjectedFormProps, SubmissionError } from 'redux-form';
+import * as React from "react";
+import { connect, Dispatch } from "react-redux";
 import { compose } from "recompose";
-import { Dispatch, connect } from "react-redux";
-import { RootState } from "../store/index";
+import { Field, InjectedFormProps, reduxForm, SubmissionError } from "redux-form";
+import { Button, Checkbox, Container, Form, Grid, Message } from "semantic-ui-react";
+import { getFunType, withPasswordDB } from "../helpers";
+import { IPasswordDB } from "../passwordDB/index";
 import { GlobalThunks } from "../store/global";
+import { RootState } from "../store/index";
 
 function mapStateToProps(state: RootState) {
   return {
     isLoggedIn: state.global.isLoggedIn,
-    search: state.global.search
-  }
+    search: state.global.search,
+  };
 }
 
 function mapDispatchToProps(dispatch: Dispatch<any>) {
   return {
-    setSearch: (what: string) => dispatch(GlobalThunks.Search(what))
-  }
+    setSearch: (what: string) => dispatch(GlobalThunks.Search(what)),
+  };
 }
 
 const mapStateToPropsType = getFunType(mapStateToProps);
@@ -36,10 +36,10 @@ interface FormData {
 type AllProps = typeof mapDispatchToPropsType & typeof mapStateToPropsType & Props & InjectedFormProps<FormData, {}>;
 
 class LoginPresentational extends React.Component<AllProps, State> {
-  render() {
+  public render() {
     return (
-      <div style={{height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <Form style={{width: '300px' }} onSubmit={this.props.handleSubmit}>
+      <div style={{height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
+        <Form style={{width: "300px" }} onSubmit={this.props.handleSubmit}>
           <Form.Field>
             <label htmlFor="username">Username</label>
             <Field component="input" id="username" autoFocus placeholder="Username" type="text" name="username" />
@@ -50,7 +50,7 @@ class LoginPresentational extends React.Component<AllProps, State> {
           </Form.Field>
           {this.props.error && <Message negative>{this.props.error}</Message>}
           <Button
-            type='submit'
+            type="submit"
             primary
             positive={this.props.submitSucceeded}
             negative={this.props.submitFailed}
@@ -67,7 +67,7 @@ class LoginPresentational extends React.Component<AllProps, State> {
 }
 
 function onSubmit(data: FormData, dispatch: Dispatch<RootState>, props: AllProps){
-  return dispatch(GlobalThunks.Login(data.username, data.password)).then(res => {
+  return dispatch(GlobalThunks.Login(data.username, data.password)).then((res) => {
     if (!res) {
       throw new SubmissionError({ _error: "Username or password invalid" });
     }
@@ -77,7 +77,7 @@ function onSubmit(data: FormData, dispatch: Dispatch<RootState>, props: AllProps
 export const Login = compose(
   connect(mapStateToProps, mapDispatchToProps),
   reduxForm({
-    form: 'login',
-    onSubmit
-  })
+    form: "login",
+    onSubmit,
+  }),
 )(LoginPresentational);

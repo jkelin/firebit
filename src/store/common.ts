@@ -4,7 +4,7 @@ import { IPasswordDB } from "../passwordDB/index";
 
 export type ThunkParam = IPasswordDB;
 
-export type ActionItem<TState, TPayload> = {
+export interface ActionItem<TState, TPayload> {
   (params: TPayload): Action;
   readonly symbol: string;
   readonly create: (params: TPayload) => Action;
@@ -12,6 +12,7 @@ export type ActionItem<TState, TPayload> = {
   readonly handle: (state: TState, payload: TPayload) => TState;
 }
 
+// tslint:disable-next-line:ban-types
 function defineActionInner<TPayload>(handle: Function, symbol: string) {
   const create = (payload: TPayload) => ({ type: symbol, payload });
   const ret: any = create;
@@ -24,14 +25,14 @@ function defineActionInner<TPayload>(handle: Function, symbol: string) {
   return ret;
 }
 
-export function defineAction<TState, TPayload>(handle: (state: TState, payload: TPayload) => TState): ActionItem<TState, TPayload> {
+export function defineActionExplicit<TState, TPayload>(handle: (state: TState, payload: TPayload) => TState): ActionItem<TState, TPayload> {
   return defineActionInner.bind(null, handle);
 }
 
 export function createActionDefiner<TState>() {
   return function defineAction<TPayload>(handle: (state: TState, payload: TPayload) => TState): ActionItem<TState, TPayload> {
     return defineActionInner.bind(null, handle);
-  }
+  };
 }
 
 function defineShallowActionInner<TPayload>(handle: (state: any, payload: TPayload) => any, symbol: string) {
@@ -46,20 +47,20 @@ function defineShallowActionInner<TPayload>(handle: (state: any, payload: TPaylo
   return ret;
 }
 
-export function defineShallowAction<TState, TPayload>(handle: (state: TState, payload: TPayload) => Partial<TState>): ActionItem<TState, TPayload> {
+export function defineShallowActionExplicit<TState, TPayload>(handle: (state: TState, payload: TPayload) => Partial<TState>): ActionItem<TState, TPayload> {
   return defineShallowActionInner.bind(null, handle);
 }
 
 export function createShallowActionDefiner<TState>() {
   return function defineShallowAction<TPayload>(handle: (state: TState, payload: TPayload) => Partial<TState>): ActionItem<TState, TPayload> {
     return defineShallowActionInner.bind(null, handle);
-  }
+  };
 }
 
 export function prepareActions<T>(actions: T): T {
   const ret: Partial<T> = {};
 
-  for (const key in actions){
+  for (const key in actions) {
     ret[key] = (actions[key] as any)(key);
   }
 
@@ -73,7 +74,7 @@ export function createReducer<TState, T extends Record<string, ActionItem<TState
         return actions[key].handle(state, (action as any).payload);
       }
     }
-  
+
     return state;
-  }
+  };
 }
