@@ -1,11 +1,11 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { getFunType, withPasswordDB } from "../helpers/index";
-import { IPasswordDB } from "../passwordDB/common";
-import { RootState } from "../store/index";
-import { InnerLayout } from "./InnerLayout";
-import { Login } from "./Login";
-import { Navbar } from "./Navbar";
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { getFunType, withPasswordDB } from '../helpers/index';
+import { IPasswordDB } from '../passwordDB/common';
+import { RootState } from '../store/index';
+import { InnerLayout } from './InnerLayout';
+import { Login } from './Login';
+import { Navbar } from './Navbar';
 
 function mapStateToProps(state: RootState) {
   return {
@@ -20,14 +20,14 @@ interface Props {}
 interface State {}
 
 class LayoutPresentational extends React.Component<typeof mapStateToPropsType & Props, State> {
-  public render() {
+  render() {
     if (!this.props.isLoggedIn) {
       return <Login />;
     }
 
     return [
-      <Navbar key="navbar" />,
-      <InnerLayout key="innerlayout" />,
+      <Navbar key='navbar' />,
+      <InnerLayout key='innerlayout' />,
     ] as any;
   }
 }

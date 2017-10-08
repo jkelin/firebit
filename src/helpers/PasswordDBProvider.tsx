@@ -1,7 +1,7 @@
-import * as React from "react";
-import { Button } from "semantic-ui-react";
-import { IPasswordDB } from "../passwordDB/index";
-import { PasswordDBProviderContext, PasswordDBProviderContextTypes } from "./common";
+import * as React from 'react';
+import { Button } from 'semantic-ui-react';
+import { IPasswordDB } from '../passwordDB/index';
+import { PasswordDBProviderContext, PasswordDBProviderContextTypes } from './common';
 
 interface Props {
   passwordDB: IPasswordDB;
@@ -10,17 +10,17 @@ interface Props {
 interface State {}
 
 export class PasswordDBProvider extends React.PureComponent<Props, State> {
-  public static childContextTypes = PasswordDBProviderContextTypes;
+  static childContextTypes = PasswordDBProviderContextTypes;
 
-  public getChildContext(): PasswordDBProviderContext {
+  getChildContext(): PasswordDBProviderContext {
     return {
       getPasswordDB: () => this.props.passwordDB,
     };
   }
 
-  public render() {
+  render() {
     return (
-      <div style={{height: "100%"}}>
+      <div style={{height: '100%'}}>
         {this.props.children}
       </div>
     );

@@ -1,6 +1,6 @@
-import { v4 } from "uuid";
+import { v4 } from 'uuid';
 
-import { IPasswordDB } from "../common";
+import { IPasswordDB } from '../common';
 
 interface Message {
   id: string;
@@ -19,7 +19,7 @@ export class WorkerPasswordDB implements Partial<IPasswordDB> {
 
   constructor() {
     this.messages = [];
-    this.worker = new ((require as any)("./passwordDB.worker.js"))();
+    this.worker = new ((require as any)('./passwordDB.worker.js'))();
 
     this.worker.onmessage = (message) => {
       const data: Message = JSON.parse(message.data);
@@ -27,7 +27,7 @@ export class WorkerPasswordDB implements Partial<IPasswordDB> {
     };
   }
 
-  public handleMessage(message: Message) {
+  handleMessage(message: Message) {
     const matching = this.messages.find((m) => m.id === message.id);
 
     if (matching) {
@@ -35,11 +35,11 @@ export class WorkerPasswordDB implements Partial<IPasswordDB> {
 
       matching.resolve(message.payload);
     } else {
-      console.error("WorkerPasswordDB worker sent unknown message", message);
+      console.error('WorkerPasswordDB worker sent unknown message', message);
     }
   }
 
-  public send<TPayload, TResponse>(type: string, payload: TPayload): Promise<TResponse> {
+  send<TPayload, TResponse>(type: string, payload: TPayload): Promise<TResponse> {
     return new Promise((resolve, reject) => {
       const message: MessagePromise = {
         id: v4(),
@@ -54,7 +54,7 @@ export class WorkerPasswordDB implements Partial<IPasswordDB> {
     });
   }
 
-  public login(username: string, password: string) {
-    return this.send<any, { success: boolean }>("login", { username, password }).then((x) => x.success);
+  login(username: string, password: string) {
+    return this.send<any, { success: boolean }>('login', { username, password }).then((x) => x.success);
   }
 }

@@ -1,6 +1,6 @@
-import { Dispatch } from "redux";
-import { Action } from "redux";
-import { IPasswordDB } from "../passwordDB/index";
+import { Dispatch } from 'redux';
+import { Action } from 'redux';
+import { IPasswordDB } from '../passwordDB/index';
 
 export type ThunkParam = IPasswordDB;
 

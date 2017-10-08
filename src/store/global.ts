@@ -1,9 +1,9 @@
-import { combineReducers, createStore } from "redux";
-import { Dispatch } from "redux";
-import { Action } from "redux";
-import { Item } from "../passwordDB/index";
-import { createActionDefiner, createReducer, createShallowActionDefiner, prepareActions, ThunkParam } from "./common";
-import { RootState } from "./index";
+import { combineReducers, createStore } from 'redux';
+import { Dispatch } from 'redux';
+import { Action } from 'redux';
+import { Item } from '../passwordDB/index';
+import { createActionDefiner, createReducer, createShallowActionDefiner, prepareActions, ThunkParam } from './common';
+import { RootState } from './index';
 
 export type GlobalState = Readonly<{
   isLoggedIn: boolean;
@@ -14,7 +14,7 @@ export type GlobalState = Readonly<{
 
 const initialState: GlobalState = {
   isLoggedIn: false,
-  search: "",
+  search: '',
 };
 
 const defineAction = createActionDefiner<GlobalState>();
@@ -32,7 +32,7 @@ export const GlobalThunks = {
     const res = await db.login(username, password);
 
     dispatch(GlobalActions.SetLoggedIn(res));
-    dispatch(GlobalThunks.Search(""));
+    dispatch(GlobalThunks.Search(''));
 
     return res;
   },

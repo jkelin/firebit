@@ -1,10 +1,10 @@
-import { combineReducers, createStore, Store } from "redux";
-import { applyMiddleware } from "redux";
-import { compose } from "redux";
-import { FormState, reducer as formReducer } from "redux-form";
-import thunk from "redux-thunk";
-import { IPasswordDB } from "../passwordDB/index";
-import { GlobalReducer, GlobalState } from "./global";
+import { combineReducers, createStore, Store } from 'redux';
+import { applyMiddleware } from 'redux';
+import { compose } from 'redux';
+import { FormState, reducer as formReducer } from 'redux-form';
+import thunk from 'redux-thunk';
+import { IPasswordDB } from '../passwordDB/index';
+import { GlobalReducer, GlobalState } from './global';
 
 export interface RootState {
   form: FormState;

@@ -1,6 +1,6 @@
-import * as PropTypes from "prop-types";
-import * as React from "react";
-import { IPasswordDB } from "../passwordDB/index";
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
+import { IPasswordDB } from '../passwordDB/index';
 
 export type HoCComponentType<T> = React.ComponentClass<T> | React.StatelessComponent<T>;
 

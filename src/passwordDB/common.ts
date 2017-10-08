@@ -19,6 +19,8 @@ export interface Tag {
 export interface Item {
   id: ItemId;
   title: string;
-  description?: string;
+  username: string;
+  url: string;
+  lastModification: string;
   tags: TagId[];
 }

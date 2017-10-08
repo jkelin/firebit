@@ -1,2 +1,2 @@
-export * from "./withPasswordDB";
-export * from "./common";
+export * from './withPasswordDB';
+export * from './common';
