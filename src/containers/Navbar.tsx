@@ -33,7 +33,7 @@ class NavbarPresentational extends React.Component<typeof mapDispatchToPropsType
         <Menu.Item name='firebit' header>FireBit</Menu.Item>
         <Menu.Item>
           <Input autoFocus icon placeholder='Search...' loading={this.props.isSearching}>
-            <input onChange={(e) => this.props.setSearch(e.target.value)} value={this.props.search} />
+            <input id='search' onChange={(e) => this.props.setSearch(e.target.value)} value={this.props.search} />
             <Icon name='search' />
           </Input>
         </Menu.Item>

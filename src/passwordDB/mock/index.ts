@@ -14,7 +14,7 @@ export class MockPasswordDB implements IPasswordDB {
   cryptoDelay: number = 500;
   opDelay: number = 100;
 
-  private data = defaultData;
+  data = defaultData;
   private isLoggedInInner = false;
 
   login = (username: string, password: string) => {

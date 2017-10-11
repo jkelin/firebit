@@ -133,3 +133,47 @@ export const defaultData: MockData = {
 
 range(20).forEach(generateTag);
 range(100).forEach(generateItem);
+
+defaultData.items.push({
+  id: 'item123' as ItemId,
+  type: ItemType.website,
+  tags: [],
+  fields: [
+    'field123-title' as FieldId,
+    'field123-username' as FieldId,
+    'field123-password' as FieldId,
+    'field123-url' as FieldId,
+  ],
+});
+
+defaultData.fields.push({
+  id: 'field123-title' as FieldId,
+  key: SpecialKeys.title,
+  lastModification: '2017-10-11T13:59:05.799Z',
+  type: FieldType.text,
+  value: '__ITEM_123__',
+});
+
+defaultData.fields.push({
+  id: 'field123-username' as FieldId,
+  key: SpecialKeys.username,
+  lastModification: '2017-10-11T13:59:17.619Z',
+  type: FieldType.text,
+  value: 'item123 username',
+});
+
+defaultData.fields.push({
+  id: 'field123-password' as FieldId,
+  key: SpecialKeys.password,
+  lastModification: '2017-10-11T13:59:25.902Z',
+  type: FieldType.password,
+  value: 'item123 password',
+});
+
+defaultData.fields.push({
+  id: 'field123-url' as FieldId,
+  key: SpecialKeys.url,
+  lastModification: '2017-10-11T13:59:34.684Z',
+  type: FieldType.text,
+  value: 'http://example.com',
+});
