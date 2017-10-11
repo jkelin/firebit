@@ -1,7 +1,7 @@
 import { combineReducers, createStore } from 'redux';
 import { Dispatch } from 'redux';
 import { Action } from 'redux';
-import { Item } from '../passwordDB/index';
+import { SearchItem, ItemId } from '../passwordDB/index';
 import { createActionDefiner, createReducer, createShallowActionDefiner, prepareActions, ThunkParam } from './common';
 import { RootState } from './index';
 
@@ -9,7 +9,7 @@ export type GlobalState = Readonly<{
   isLoggedIn: boolean;
   search: string;
   isSearching?: boolean;
-  searchResults?: Item[];
+  searchResults?: SearchItem[];
 }>;
 
 const initialState: GlobalState = {
@@ -23,25 +23,33 @@ const shallowAction = createShallowActionDefiner<GlobalState>();
 export const GlobalActions = prepareActions({
   SetLoggedIn: shallowAction<boolean>((state, isLoggedIn) => ({ isLoggedIn })),
   SetSearch: shallowAction<string>((state, search) => ({ search })),
-  SetSearchResults: shallowAction<Item[]>((state, searchResults) => ({ searchResults })),
+  SetSearchResults: shallowAction<SearchItem[]>((state, searchResults) => ({ searchResults })),
   SetIsSearching: shallowAction<boolean>((state, isSearching) => ({ isSearching })),
 });
 
 export const GlobalThunks = {
-  Login: (username: string, password: string) => async (dispatch: Dispatch<any>, getState: () => RootState, db: ThunkParam) => {
-    const res = await db.login(username, password);
+  Login: (username: string, password: string) => async (dispatch: Dispatch<any>, getState: () => RootState, thunk: ThunkParam) => {
+    const res = await thunk.db.login(username, password);
 
     dispatch(GlobalActions.SetLoggedIn(res));
     dispatch(GlobalThunks.Search(''));
 
     return res;
   },
-  Search: (what: string) => async (dispatch: Dispatch<any>, getState: () => RootState, db: ThunkParam) => {
+  Search: (what: string) => async (dispatch: Dispatch<any>, getState: () => RootState, thunk: ThunkParam) => {
     dispatch(GlobalActions.SetIsSearching(true));
     dispatch(GlobalActions.SetSearch(what));
-    const res = await db.searchItems(what);
+    const res = await thunk.db.searchItems(what);
     dispatch(GlobalActions.SetSearchResults(res));
     dispatch(GlobalActions.SetIsSearching(false));
+  },
+  CopyToClipboard: (itemId: ItemId, selector: { key: string }) => async (dispatch: Dispatch<any>, getState: () => RootState, thunk: ThunkParam) => {
+    if (!selector.key) {
+      throw new Error('Selector.key is required');
+    }
+
+    const res = await thunk.db.readItemFieldValueByKey(itemId, selector.key);
+    thunk.copyToClipboard(res);
   },
 };
 

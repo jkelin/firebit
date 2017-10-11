@@ -5,6 +5,7 @@ import { FormState, reducer as formReducer } from 'redux-form';
 import thunk from 'redux-thunk';
 import { IPasswordDB } from '../passwordDB/index';
 import { GlobalReducer, GlobalState } from './global';
+import * as copyToClipboard from 'clipboard-copy';
 
 export interface RootState {
   form: FormState;
@@ -24,7 +25,10 @@ export function createFireBitStore(db: IPasswordDB): RootStore {
   return createStore(
     combineReducers(reducers),
     composeEnhancers(
-      applyMiddleware(thunk.withExtraArgument(db)),
+      applyMiddleware(thunk.withExtraArgument({
+        copyToClipboard,
+        db,
+      })),
     ),
   );
 }

@@ -2,7 +2,10 @@ import { Dispatch } from 'redux';
 import { Action } from 'redux';
 import { IPasswordDB } from '../passwordDB/index';
 
-export type ThunkParam = IPasswordDB;
+export interface ThunkParam {
+  copyToClipboard: (what: string) => void;
+  db: IPasswordDB;
+}
 
 export interface ActionItem<TState, TPayload> {
   (params: TPayload): Action;

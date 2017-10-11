@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Table, Button, Menu } from 'semantic-ui-react';
-import { Item, ItemId } from '../passwordDB/index';
+import { SearchItem, ItemId } from '../passwordDB/index';
 
 interface Props {
   id: ItemId;
