@@ -3,10 +3,9 @@ import { connect, Dispatch } from 'react-redux';
 import { compose } from 'recompose';
 import { Field, InjectedFormProps, reduxForm, SubmissionError } from 'redux-form';
 import { Button, Checkbox, Container, Form, Grid, Message } from 'semantic-ui-react';
-import { getFunType, withPasswordDB } from '../helpers';
-import { IPasswordDB } from '../passwordDB/index';
 import { GlobalThunks } from '../store/global';
-import { RootState } from '../store/index';
+import { RootState } from 'store';
+import { getFunType } from 'helpers';
 
 function mapStateToProps(state: RootState) {
   return {
@@ -39,7 +38,7 @@ class LoginPresentational extends React.Component<AllProps, State> {
   render() {
     return (
       <div style={{height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <Form style={{width: '300px' }} onSubmit={this.props.handleSubmit}>
+        <Form style={{width: '300px' }} onSubmit={this.props.handleSubmit} id='login'>
           <Form.Field>
             <label htmlFor='username'>Username</label>
             <Field component='input' id='username' autoFocus placeholder='Username' type='text' name='username' />
@@ -55,7 +54,7 @@ class LoginPresentational extends React.Component<AllProps, State> {
             positive={this.props.submitSucceeded}
             negative={this.props.submitFailed}
             fluid
-            loading={this.props.submitting}
+            loading={this.props.submitting || false}
             disabled={this.props.submitting}
           >
             Login

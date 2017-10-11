@@ -10,8 +10,16 @@
       "noImplicitThis": true,
       "strictNullChecks": true,
       "jsx": "react",
-      "lib": ["dom", "es6"]
+      "lib": ["dom", "es6"],
+      "moduleResolution": "node",
+      "baseUrl": "./src",
+      "rootDir": "./src"
     },
+    "exclude": [
+      "node_modules",
+      "build",
+      "dist"
+    ],
     "include": [
         "./src/**/*"
     ]

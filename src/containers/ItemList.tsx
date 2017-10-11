@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { Table, Grid } from 'semantic-ui-react';
-import { getFunType, withPasswordDB } from '../helpers/index';
-import { IPasswordDB } from '../passwordDB/common';
-import { RootState } from '../store/index';
 import { Login } from './Login';
 import { Navbar } from './Navbar';
-import { ItemListItem } from '../components/ItemListItem';
-import { SearchItem, ItemId, SpecialKeys } from '../passwordDB/index';
-import { GlobalThunks } from '../store/global';
+import { GlobalThunks } from 'store/global';
+import { ItemId, SpecialKeys } from 'passwordDB';
+import { getFunType } from 'helpers';
+import { RootState } from 'store';
+import { ItemListItem } from 'components/ItemListItem';
 
 function mapStateToProps(state: RootState) {
   return {

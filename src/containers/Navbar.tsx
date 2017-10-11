@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { Icon, Input, Menu } from 'semantic-ui-react';
-import { getFunType, withPasswordDB } from '../helpers/index';
-import { IPasswordDB } from '../passwordDB/common';
-import { GlobalThunks } from '../store/global';
 import { RootState } from '../store/index';
 import { Login } from './Login';
+import { GlobalThunks } from 'store/global';
+import { getFunType } from 'helpers';
 
 function mapStateToProps(state: RootState) {
   return {

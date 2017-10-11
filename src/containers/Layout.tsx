@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { getFunType, withPasswordDB } from '../helpers/index';
-import { IPasswordDB } from '../passwordDB/common';
-import { RootState } from '../store/index';
 import { InnerLayout } from './InnerLayout';
 import { Login } from './Login';
 import { Navbar } from './Navbar';
+import { RootState } from 'store';
+import { getFunType } from 'helpers';
 
 function mapStateToProps(state: RootState) {
   return {

@@ -11,12 +11,35 @@
     "build:dev:analyze": "cross-env WEBPACK_ANALYZE=true yarn build:dev",
     "start": "webpack-dev-server --config webpack.config.dev.js --env development",
     "lint": "tslint -c tslint.json --project ./",
-    "lint:fix": "tslint -c tslint.json --project ./ --fix"
+    "lint:fix": "tslint -c tslint.json --project ./ --fix",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "setupFiles": ["./config/setupTests.js"]
+  },
   "dependencies": {
+    "@types/enzyme": "^2.8.12",
+    "@types/enzyme-adapter-react-16": "^1.0.0",
     "@types/faker": "^4.1.1",
+    "@types/jest": "^21.1.2",
+    "@types/jsdom": "^11.0.2",
     "@types/lodash": "^4.14.76",
     "@types/prop-types": "^15.5.2",
     "@types/react": "^16.0.7",
@@ -38,11 +61,15 @@
     "clipboard-copy": "^1.2.0",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.1",
     "extract-text-webpack-plugin": "^3.0.1",
     "faker": "^4.1.0",
     "file-loader": "^0.11.2",
     "fork-ts-checker-webpack-plugin": "^0.2.8",
     "html-webpack-plugin": "^2.30.1",
+    "jest": "^21.2.1",
+    "jsdom": "^11.3.0",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
     "prop-types": "^15.6.0",
@@ -50,6 +77,7 @@
     "react-dom": "^16.0.0",
     "react-hot-loader": "^3.0.0-beta.7",
     "react-redux": "^5.0.6",
+    "react-test-renderer": "^16.0.0",
     "recompose": "^0.25.1",
     "redux": "^3.7.2",
     "redux-form": "^7.0.4",
@@ -58,6 +86,7 @@
     "source-map-loader": "^0.2.1",
     "style-loader": "^0.19.0",
     "thread-loader": "^1.1.1",
+    "ts-jest": "^21.1.2",
     "ts-loader": "^2.3.7",
     "tslint": "^5.7.0",
     "tslint-loader": "^3.5.3",

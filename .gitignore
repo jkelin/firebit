@@ -3,3 +3,4 @@ dist
 .cache-loader
 .vs
 .vscode
+yarn-error.log

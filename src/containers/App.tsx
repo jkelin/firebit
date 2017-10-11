@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
-import { PasswordDBProvider } from '../helpers/PasswordDBProvider';
-import { IPasswordDB } from '../passwordDB/index';
-import { RootStore } from '../store/index';
 import { Layout } from './Layout';
+import { IPasswordDB } from 'passwordDB';
+import { RootStore } from 'store';
+import { PasswordDBProvider } from 'helpers';
 
 interface Props {
   passwordDB: IPasswordDB;
