@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Table, Button, Menu } from 'semantic-ui-react';
+import { Table, Button, Menu, Icon } from 'semantic-ui-react';
 import { ItemId } from 'passwordDB';
+import { Link } from 'react-router5';
 
 interface Props {
   id: ItemId;
@@ -8,6 +9,7 @@ interface Props {
   lastModification: string;
   username?: string;
   url?: string;
+  isActive: boolean;
 
   copyPassword: () => any;
   copyUsername: () => any;
@@ -17,20 +19,20 @@ interface State {}
 
 export class ItemListItem extends React.Component<Props, State> {
   shouldComponentUpdate(props: Props) {
-    return this.props.lastModification !== props.lastModification;
+    return this.props.lastModification !== props.lastModification || this.props.isActive !== props.isActive;
   }
 
   render() {
     return (
-      <div className='item' id={`item-list-item-${this.props.id}`}>
-        <a className='description' href='#'>
+      <div className={`item${this.props.isActive ? ' active' : ''}`} id={`item-list-item-${this.props.id}`}>
+        <Link className='description' routeName='item' routeParams={{ itemId: this.props.id }} >
           <div className='first-row'>
             <b className='title'>{this.props.title}</b>
           </div>
           <div className='second-row'>
             {this.props.username}
           </div>
-        </a>
+        </Link>
         <div className='actions'>
           {this.props.copyUsername &&
             <Button
@@ -51,11 +53,11 @@ export class ItemListItem extends React.Component<Props, State> {
           }
 
           {this.props.url &&
-            <Button
-              className='button open-url'
-              icon='external'
-              title='Open url'
-            />
+            <a className='ui icon button open-url' href={this.props.url} title='Open url'>
+              <Icon
+                name='external'
+              />
+            </a>
           }
         </div>
       </div>

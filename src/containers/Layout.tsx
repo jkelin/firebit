@@ -24,10 +24,12 @@ class LayoutPresentational extends React.Component<typeof mapStateToPropsType & 
       return <Login />;
     }
 
-    return [
-      <Navbar key='navbar' />,
-      <InnerLayout key='innerlayout' />,
-    ] as any;
+    return (
+      <div id='layout'>
+        <Navbar key='navbar' />
+        <InnerLayout key='innerlayout' />
+      </div>
+    );
   }
 }
 

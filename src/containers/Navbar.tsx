@@ -29,19 +29,9 @@ interface State {}
 class NavbarPresentational extends React.Component<typeof mapDispatchToPropsType & typeof mapStateToPropsType & Props, State> {
   render() {
     return (
-      <Menu stackable size='mini'>
-        <Menu.Item name='firebit' header>FireBit</Menu.Item>
-        <Menu.Item>
-          <Input autoFocus icon placeholder='Search...' loading={this.props.isSearching}>
-            <input id='search' onChange={(e) => this.props.setSearch(e.target.value)} value={this.props.search} />
-            <Icon name='search' />
-          </Input>
-        </Menu.Item>
-        <Menu.Menu position='right'>
-          <Menu.Item icon='setting' name='settings' />
-          <Menu.Item icon='lock' name='logout' active={false} />
-        </Menu.Menu>
-      </Menu>
+      <nav id='navbar'>
+        <input id='search' onChange={(e) => this.props.setSearch(e.target.value)} value={this.props.search} />
+      </nav>
     );
   }
 }

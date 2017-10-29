@@ -18,7 +18,8 @@
       "arrow-parens": false,
       "member-access": [true, "no-public"],
       "ordered-imports": false,
-      "quotemark": [true, "single"]
+      "quotemark": [true, "single"],
+      "no-var-requires": false
     },
     "rulesDirectory": []
 }

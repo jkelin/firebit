@@ -10,6 +10,7 @@
     "build:dev": "cross-env NODE_ENV=development webpack --config webpack.config.dev.js --env development",
     "build:dev:analyze": "cross-env WEBPACK_ANALYZE=true yarn build:dev",
     "start": "webpack-dev-server --config webpack.config.dev.js --env development",
+    "start:public": "webpack-dev-server --config webpack.config.dev.js --env development --host 0.0.0.0",
     "lint": "tslint -c tslint.json --project ./",
     "lint:fix": "tslint -c tslint.json --project ./ --fix",
     "test": "jest"
@@ -20,7 +21,7 @@
     "transform": {
       "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testRegex": "((\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -80,11 +81,14 @@
     "react-dom": "^16.0.0",
     "react-hot-loader": "^3.0.0-beta.7",
     "react-redux": "^5.0.6",
+    "react-router5": "^5.2.0",
     "react-test-renderer": "^16.0.0",
     "recompose": "^0.25.1",
     "redux": "^3.7.2",
     "redux-form": "^7.0.4",
+    "redux-router5": "^5.0.0",
     "redux-thunk": "^2.2.0",
+    "router5": "^5.3.0",
     "semantic-ui-react": "^0.74.2",
     "sinon": "^4.0.1",
     "source-map-loader": "^0.2.1",

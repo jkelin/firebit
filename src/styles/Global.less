@@ -1,0 +1,26 @@
+body, html, #app-container {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+main#main {
+  display: flex;
+  height: 100%;
+
+  &>* {
+    flex-grow: 1;
+    height: 100%;
+    overflow: auto;
+
+    &:not(:first-child) {
+      border-left: 1px solid rgb(165, 16, 16);
+    }
+  }
+}
